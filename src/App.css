@@ -36,3 +36,18 @@
     transform: rotate(360deg);
   }
 }
+.link {
+  /* color: white; */
+  text-decoration: none;
+  font-size: medium;
+  font-weight: bold;
+}
+
+.navbar {
+  padding: 0 5rem;
+}
+
+.nav-child:hover {
+  background-color: whitesmoke;
+  border-radius: 50%;
+}
