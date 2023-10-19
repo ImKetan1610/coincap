@@ -2,6 +2,8 @@
   width: 100%;
   border-collapse: collapse;
   text-align: left;
+  position: relative;
+  top: -8rem;
 }
 
 .crypto-table th,
@@ -13,6 +15,10 @@
 .crypto-table thead {
   background-color: #0000ff;
   color: white;
+}
+
+.crypto-table tbody {
+  background-color: white;
 }
 
 .crypto-table tr:nth-child(even) {

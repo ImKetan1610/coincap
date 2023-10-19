@@ -1,18 +1,29 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./crypto.css";
+import { Box } from "@mui/material";
+import data from "../Data/cryptoData";
 
 function CryptoTable() {
   const [cryptocurrencies, setCryptocurrencies] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
 
+  // added logic for data stored below this line
+  const ItemsPerPage = 50;
+  const paginateData = (data, currentPage, ItemsPerPage) => {
+    const start = (page - 1) * ItemsPerPage;
+    const end = start + ItemsPerPage;
+    return data.slice(start, end);
+  };
+  // added logic for data stored above this line
   const loadMore = () => {
     // Increase the page number to fetch the next page of cryptocurrencies
     setPage(page + 1);
   };
 
   const getData = (currentPage) => {
+    /*
     axios
       .get(`https://api.coincap.io/v2/assets?limit=50&page=${currentPage}`)
       .then((response) => {
@@ -22,9 +33,15 @@ function CryptoTable() {
         setLoading(false);
       })
       .catch((error) => {
-        console.error("Error fetching cryptocurrencies:", error);
+        console.log("Error fetching cryptocurrencies:", error);
         setLoading(false);
       });
+      */
+    const newData = paginateData(data, page, ItemsPerPage);
+    setTimeout(() => {
+      setCryptocurrencies([...cryptocurrencies, ...newData]);
+      setLoading(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -41,7 +58,7 @@ function CryptoTable() {
   };
 
   return (
-    <div>
+    <div style={{ padding: "0 5rem 0 5rem" }}>
       <table className="crypto-table">
         <thead>
           <tr>
@@ -76,11 +93,20 @@ function CryptoTable() {
           ))}
         </tbody>
       </table>
-      {loading ? (
-        <p>Loading...</p>
-      ) : (
-        <button onClick={loadMore}>Load More</button>
-      )}
+      <Box style={{ marginBottom: "5rem", marginTop: "-5rem" }}>
+        {loading ? (
+          <>
+            <img
+              alt="Loader"
+              width="50px"
+              src="https://cdn.dribbble.com/users/1787505/screenshots/7300251/media/a351d9e0236c03a539181b95faced9e0.gif"
+            />
+            <h3>Loading...</h3>
+          </>
+        ) : (
+          <button onClick={loadMore}>Load More</button>
+        )}
+      </Box>
     </div>
   );
 }
