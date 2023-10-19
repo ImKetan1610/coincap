@@ -12,7 +12,7 @@ function CryptoTable() {
   // added logic for data stored below this line
   const ItemsPerPage = 50;
   const paginateData = (data, currentPage, ItemsPerPage) => {
-    const start = (page - 1) * ItemsPerPage;
+    const start = (currentPage - 1) * ItemsPerPage;
     const end = start + ItemsPerPage;
     return data.slice(start, end);
   };
@@ -37,7 +37,7 @@ function CryptoTable() {
         setLoading(false);
       });
       */
-    const newData = paginateData(data, page, ItemsPerPage);
+    const newData = paginateData(data, currentPage, ItemsPerPage);
     setTimeout(() => {
       setCryptocurrencies([...cryptocurrencies, ...newData]);
       setLoading(false);
